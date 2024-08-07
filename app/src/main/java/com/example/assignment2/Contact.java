@@ -13,10 +13,12 @@ public class Contact {
         this.iconIndex = iconIndex;
     }
 
-    public Contact(String contactName, String contactNumber) {
+    public Contact(String contactName, String contactNumber, int iconIndex) {
         this.contactName = contactName;
         this.contactNumber = contactNumber;
+        this.iconIndex = iconIndex;
     }
+
     public Contact(){}
 
     public String getContactName() {

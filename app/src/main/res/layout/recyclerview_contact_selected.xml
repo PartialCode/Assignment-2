@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardBackgroundColor="#2196F3"
+    app:cardCornerRadius="10dp"
+    app:cardElevation="10dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/imgAvatar1"
+            android:layout_width="wrap_content"
+            android:layout_height="150dp"
+            android:cropToPadding="true"
+            android:scaleType="centerCrop"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:srcCompat="@drawable/ic_launcher_background" />
+
+        <TextView
+            android:id="@+id/lblName1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="#B3FFFFFF"
+            android:text="[name]"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imgAvatar1" />
+
+        <TextView
+            android:id="@+id/lblContactNum1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="#BFFFFFFF"
+            android:text="[contactNum]"
+            app:layout_constraintBottom_toTopOf="@+id/lblName1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <LinearLayout
+            android:layout_width="411dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="2dp"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/lblName1">
+
+            <ImageButton
+                android:id="@+id/btnMessage"
+                style="@style/Widget.AppCompat.ImageButton"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:backgroundTint="#304FFE"
+                android:onClick="onBtnMessageClicked"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/btnEdit"
+                app:layout_constraintStart_toEndOf="@+id/btnCall"
+                app:layout_constraintTop_toBottomOf="@+id/lblName1"
+                app:srcCompat="@android:drawable/stat_notify_chat" />
+
+            <ImageButton
+                android:id="@+id/btnCall"
+                style="@style/Widget.AppCompat.ImageButton"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="1dp"
+                android:layout_weight="1"
+                android:backgroundTint="#00C853"
+                android:onClick="onBtnCallClicked"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/btnMessage"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/lblName1"
+                app:srcCompat="@android:drawable/stat_sys_phone_call" />
+
+            <ImageButton
+                android:id="@+id/btnEdit"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:backgroundTint="#FFAB00"
+                android:onClick="onBtnEditClicked"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/btnMessage"
+                app:layout_constraintTop_toBottomOf="@+id/lblName1"
+                app:srcCompat="@android:drawable/ic_menu_edit" />
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>
