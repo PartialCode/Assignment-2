@@ -1,29 +1,27 @@
 package com.example.assignment2;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.StaggeredGridLayoutManager;
-
-import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
 
 public class ContactsListActivity extends AppCompatActivity {
 
     private RecyclerView rwContactsList;
-
+    private ContactAdapter.ContactViewHolder selected;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,7 +48,18 @@ public class ContactsListActivity extends AppCompatActivity {
             ContactAdapter.ContactViewHolder cvh =
                     (ContactAdapter.ContactViewHolder)rwContactsList.findContainingViewHolder(view);
             ViewGroup parent = (ViewGroup) view.getParent();
+            //changing the views like this might not lead to proper bindings inside the objects
+            if (selected != null){
+                selected.itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_contact, parent, false);
+                selected.imgAvatar = selected.itemView.findViewById(R.id.imgAvatar);
+                selected.lblContactNum = selected.itemView.findViewById(R.id.lblContactNum);
+                selected.lblName = selected.itemView.findViewById(R.id.lblName);
+            }
             cvh.itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_contact_selected,parent, false);
+            cvh.imgAvatar = cvh.itemView.findViewById(R.id.imgAvatar1);
+            cvh.lblContactNum = cvh.itemView.findViewById(R.id.lblContactNum1);
+            cvh.lblName = cvh.itemView.findViewById(R.id.lblName1);
+            selected = cvh;
         });
     }
 
@@ -71,5 +80,8 @@ public class ContactsListActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void onBtnAddClicked(View view){}
+    public void onBtnAddClicked(View view){
+        Contact newContact = new Contact();
+
+    }
 }
