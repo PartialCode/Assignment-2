@@ -13,15 +13,21 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
+import java.util.AbstractMap;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import classes.Broker;
 
 
 public class ContactsListActivity extends AppCompatActivity {
 
     private RecyclerView rwContactsList;
     private ContactAdapter.ContactViewHolder selected;
+
+    private Broker broker = Broker.getInstance();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,8 +86,13 @@ public class ContactsListActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+
+    //How we going to add info to this contact??
     public void onBtnAddClicked(View view){
         Contact newContact = new Contact();
+        Map<String, Object> arg = new HashMap<>(1);
+        arg.put("contact",newContact);
+        broker.publish(this,arg,"add");
 
     }
 }

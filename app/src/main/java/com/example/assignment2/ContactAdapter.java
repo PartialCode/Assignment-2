@@ -13,10 +13,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 import java.util.Map;
 
+import classes.Broker;
+import classes.Subscriber;
 
-public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactViewHolder> {
+
+public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactViewHolder> implements Subscriber {
 
     private View.OnClickListener onClickListener;
+    private Broker broker = Broker.getInstance();
 
     public ContactAdapter(List<Contact> contactsList, View.OnClickListener onClickListener){
         this.onClickListener = onClickListener;
@@ -26,6 +30,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
 
     public ContactAdapter(List<Contact> contactList){
         this.contactList = contactList;
+        broker.registerSubscriber(this,"add");
     }
 
     @NonNull
@@ -51,6 +56,16 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
     @Override
     public int getItemCount() {
         return contactList.size();
+    }
+
+    @Override
+    public void message(Object o, String s, Map<String, Object> map) {
+        if (s == "add"){
+            if (map.containsKey("contact")){
+                Contact contact = (Contact)map.get("contact");
+                add(contact);
+            }
+        }
     }
 
     protected static class ContactViewHolder extends RecyclerView.ViewHolder{
