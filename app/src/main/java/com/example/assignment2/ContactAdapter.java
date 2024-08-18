@@ -1,10 +1,12 @@
 package com.example.assignment2;
 
+import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -66,50 +68,48 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
                 add(contact);
             }
         }
+        else if (s == "edit"){
+            if (map.containsKey("contact")){
+                Contact contact = (Contact)map.get("contact");
+                Integer pos = (Integer)map.get("pos");
+                remove(pos.intValue());
+                add(pos.intValue(), contact);
+            }
+        }
     }
 
     protected static class ContactViewHolder extends RecyclerView.ViewHolder{
         public TextView lblName, lblContactNum;
         public ImageView imgAvatar;
         public View itemView;
+        public LinearLayout buttons;
+        public Contact contact;
         public ContactViewHolder(@NonNull View itemView) {
             super(itemView);
             lblName = itemView.findViewById(R.id.lblName);
             lblContactNum = itemView.findViewById(R.id.lblContactNum);
             imgAvatar = itemView.findViewById(R.id.imgAvatar);
+            buttons = itemView.findViewById(R.id.buttons);
+            buttons.setVisibility(View.GONE);
             this.itemView = itemView;
         }
 
         public void setContact(Contact contact) {
-            //int imgId = itemView.getResources().getIdentifier(resourceName,"drawable",getClass().getPackageName());
-            try{
-                if (imgAvatar != null){
-                    if (contact.getIconIndex() >= 9){
-                        imgAvatar.setImageResource(R.drawable.avatar_pokemon);
-                    }
-                    else{
-                        String resourceName = "avatar_0" + (contact.getIconIndex()+1);
-                        int imgId = R.drawable.class.getField(resourceName).getInt(null);
-                        imgAvatar.setImageResource(imgId);
-                    }
-                }
-            }
-            catch (Exception e){
-                for (StackTraceElement element : e.getStackTrace()){
-                    Log.e("ContactsViewHolder",element.toString());
-                }
-            }
-            finally {
-                lblName.setText(contact.getContactName());
-                lblContactNum.setText(contact.getContactNumber());
-            }
-
+            imgAvatar.setImageResource(contact.getImageResourceID());
+            lblName.setText(contact.getContactName());
+            lblContactNum.setText(contact.getContactNumber());
+            this.contact = contact;
         }
 
         @Override
         public String toString() {
             return super.toString();
         }
+    }
+
+    public void add(int pos, Contact contact){
+        contactList.add(pos, contact);
+        notifyItemChanged(pos);
     }
 
     public void add(Contact contact){

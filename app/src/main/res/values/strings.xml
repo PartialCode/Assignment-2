@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Assignment2</string>
+    <string name="contact_number_label">Contact Number</string>
+    <string name="contact_name_label">Name</string>
+    <string name="contact_name_hint">Enter Contact Name here</string>
+    <string name="contact_number_hint">Enter Contact Number here</string>
 </resources>
