@@ -32,7 +32,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
 
     public ContactAdapter(List<Contact> contactList){
         this.contactList = contactList;
-        broker.registerSubscriber(this,"add");
+        broker.registerSubscriber(this,"add","edit");
     }
 
     @NonNull
@@ -65,15 +65,19 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
         if (s == "add"){
             if (map.containsKey("contact")){
                 Contact contact = (Contact)map.get("contact");
-                add(contact);
+                if (contact != null){
+                 contact.setListIndex(getItemCount());
+                 add(contact);
+                }
             }
         }
         else if (s == "edit"){
             if (map.containsKey("contact")){
                 Contact contact = (Contact)map.get("contact");
-                Integer pos = (Integer)map.get("pos");
-                remove(pos.intValue());
-                add(pos.intValue(), contact);
+                if (contact != null) {
+                    remove(contact.getListIndex());
+                    add(contact.getListIndex(), contact);
+                }
             }
         }
     }

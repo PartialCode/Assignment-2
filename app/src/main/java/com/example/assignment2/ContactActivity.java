@@ -57,9 +57,6 @@ public class ContactActivity extends AppCompatActivity {
             if (extras != null){
                 Contact contact = (Contact) extras.getSerializable("contact");
                 isEdit = extras.getBoolean("isEdit");
-                if (isEdit){
-                    pos = extras.getInt("pos");
-                }
                 if (contact != null){
                     strName = contact.getContactName();
                     strContactNum = contact.getContactNumber();
@@ -90,7 +87,6 @@ public class ContactActivity extends AppCompatActivity {
             Map<String, Object> args = new HashMap<>(10);
             Contact contact = new Contact(edtName.getText().toString(), edtContactNum.getText().toString(), imgId);
             args.put("contact", contact);
-            args.put("pos",pos);
             broker.publish(this,args,"edit");
         }
         else{

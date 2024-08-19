@@ -50,6 +50,7 @@ public class ContactsListActivity extends AppCompatActivity {
         }
         rwContactsList = findViewById(R.id.rwContactsList);
         ContactAdapter adapter = new ContactAdapter(contactList);
+
         rwContactsList.setAdapter(adapter);
         rwContactsList.setLayoutManager(new StaggeredGridLayoutManager(2, LinearLayout.VERTICAL));
         rwContactsList.addItemDecoration(new EqualSpaceItemDecoration(18));
@@ -82,7 +83,6 @@ public class ContactsListActivity extends AppCompatActivity {
     public void onBtnEditClicked(View view){
         Intent intent = new Intent(this, ContactActivity.class);
         intent.putExtra("isEdit",true);
-        intent.putExtra("pos",posOfSelected);
         Contact contact = selected.contact;
         intent.putExtra("contact", contact);
         startActivity(intent);
