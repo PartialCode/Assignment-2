@@ -18,6 +18,14 @@ public class Contact implements Serializable {
     private String contactName;
     private String contactNumber;
     private int imageResourceID;
+
+    public void copy(Contact contact){
+        this.contactName = contact.getContactName();
+        this.contactNumber = contact.getContactNumber();
+        this.imageResourceID = contact.getImageResourceID();
+        this.listIndex = contact.getListIndex();
+    }
+
     public int getImageResourceID() {
         return imageResourceID;
     }

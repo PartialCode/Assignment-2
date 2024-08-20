@@ -30,7 +30,7 @@ public class ContactActivity extends AppCompatActivity {
     //These are to check if info has been changed at all
     //Don't want to save a duplicate of a contact
     private String strName, strContactNum;
-    private int imgId, pos;
+    private int imgId, pos, newImgId;
     private boolean isEdit = false;
     private ActivityResultLauncher<Intent> getImageLauncher;
 
@@ -43,9 +43,9 @@ public class ContactActivity extends AppCompatActivity {
             if (result.getResultCode() != Activity.RESULT_OK) return;
             Intent data = result.getData();
             if (data != null) {
-                imgId = data.getExtras().getInt("imageResourceID");
+                newImgId = data.getExtras().getInt("imageResourceID");
             }
-            imgAvatar.setImageResource(imgId);
+            imgAvatar.setImageResource(newImgId);
         });
         broker = Broker.getInstance();
         edtName = findViewById(R.id.contact_activity_name);
@@ -57,6 +57,9 @@ public class ContactActivity extends AppCompatActivity {
             if (extras != null){
                 Contact contact = (Contact) extras.getSerializable("contact");
                 isEdit = extras.getBoolean("isEdit");
+                if (isEdit){
+                    pos = contact.getListIndex();
+                }
                 if (contact != null){
                     strName = contact.getContactName();
                     strContactNum = contact.getContactNumber();
@@ -83,17 +86,24 @@ public class ContactActivity extends AppCompatActivity {
         if (edtName.getText() == null || edtContactNum.getText() == null || imgAvatar.getDrawable() == null){
             Toast.makeText(getApplicationContext(),"no data in the fields", Toast.LENGTH_LONG).show();
         }
-        else if (isEdit){
-            Map<String, Object> args = new HashMap<>(10);
-            Contact contact = new Contact(edtName.getText().toString(), edtContactNum.getText().toString(), imgId);
-            args.put("contact", contact);
-            broker.publish(this,args,"edit");
-        }
-        else{
-            Map<String, Object> args = new HashMap<>(10);
-            Contact contact = new Contact(edtName.getText().toString(), edtContactNum.getText().toString(), imgId);
-            args.put("contact", contact);
-            broker.publish(this,args,"add");
+        else {
+            strName = edtName.getText().toString();
+            strContactNum = edtContactNum.getText().toString();
+            if (newImgId != 0){
+                imgId = newImgId;
+            }
+            if (isEdit){
+                Map<String, Object> args = new HashMap<>(10);
+                Contact contact = new Contact(edtName.getText().toString(), edtContactNum.getText().toString(), imgId, pos);
+                args.put("contact",contact);
+                broker.publish(this,args,"edit");
+            }
+            else{
+                Map<String, Object> args = new HashMap<>(10);
+                Contact contact = new Contact(edtName.getText().toString(), edtContactNum.getText().toString(), imgId);
+                args.put("contact", contact);
+                broker.publish(this,args,"add");
+            }
         }
     }
 

@@ -24,8 +24,6 @@ import classes.Broker;
 
 public class ContactsListActivity extends AppCompatActivity {
 
-    //TODO: update code to make use of index already inside Contact Object to find it's position in list for edits
-
     public static final String TAG = "ContactsListActivity";
     private RecyclerView rwContactsList;
     private ContactAdapter.ContactViewHolder selected;
@@ -74,7 +72,7 @@ public class ContactsListActivity extends AppCompatActivity {
     }
 
     public void onBtnCallClicked(View view){
-        TextView lblContactNum = findViewById(R.id.lblContactNum);
+        TextView lblContactNum = selected.itemView.findViewById(R.id.lblContactNum);
         String contactNum = "tel:" + lblContactNum.getText().toString();
         Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse(contactNum));
         startActivity(intent);
@@ -89,7 +87,7 @@ public class ContactsListActivity extends AppCompatActivity {
     }
 
     public void onBtnMessageClicked(View view){
-        TextView lblContactNum = findViewById(R.id.lblContactNum);
+        TextView lblContactNum = selected.itemView.findViewById(R.id.lblContactNum);
         Uri smsUri = Uri.parse("smsto:"+lblContactNum.getText().toString());
         Intent intent = new Intent(Intent.ACTION_SENDTO,smsUri);
         intent.putExtra("sms_body","Hello World");

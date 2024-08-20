@@ -60,6 +60,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
         return contactList.size();
     }
 
+    //TODO: Instead of replace contact, edit the contact at that position
     @Override
     public void message(Object o, String s, Map<String, Object> map) {
         if (s == "add"){
@@ -73,10 +74,11 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactV
         }
         else if (s == "edit"){
             if (map.containsKey("contact")){
-                Contact contact = (Contact)map.get("contact");
-                if (contact != null) {
-                    remove(contact.getListIndex());
-                    add(contact.getListIndex(), contact);
+                Contact contact = (Contact) map.get("contact");
+                if (contact != null){
+                    Contact copier = contactList.get(contact.getListIndex());
+                    copier.copy(contact);
+                    notifyItemChanged(contact.getListIndex());
                 }
             }
         }
